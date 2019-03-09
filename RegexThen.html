@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="RegexThen.js"></script>
+
+</head>
+<body>
+
+
+<script>
+
+
+let reg = RegexThen
+            //.begin()
+            .find("to:")
+            .allowSpace(0, 1)
+            .findAndOutGroup("&quot;" ,"\"", "'")
+            .groupMultipleValues()
+            .findAndOutGroup("&quot;" ,"\"", "'")
+            .end()
+            .execute();
+
+
+console.info(reg)
+
+var str = 'Status Comment was changed from: &quot;test1&quot; to: &quot;test2&quot;';
+
+var ma = reg.exec(str);
+
+console.info(ma)
+
+console.info(ma[1])
+
+</script>
+
+    
+</body>
+</html>
