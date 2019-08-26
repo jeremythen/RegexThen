@@ -1,8 +1,6 @@
 (function(global) {
     "use strict"
 
-    var regStr = '';
-
     var RegexThen = function() {
         return new RegexThen.fn.init();
     }
@@ -10,33 +8,32 @@
     RegexThen.fn = RegexThen.prototype = {
         regStr: '',
         modifiers: '',
-        begin: function() {
+        begin() {
             this.regStr += '^';
             return this;
         },
-        beginWith: function(str) {
-            this.regStr += '^' + srt;
+        beginWith(str) {
+            this.regStr += '^' + str;
             return this;
         },
-        end: function() {
+        end() {
             this.regStr += '$';
             return this;
         },
-        endsWith: function(str) {
-            this.regStr += srt + '$';
+        endsWith(str) {
+            this.regStr += str + '$';
             return this;
         },
-        beginsAndEndsWith: function(str) {
-            this.regStr += '^' + srt + '$';
+        beginsAndEndsWith(str) {
+            this.regStr += '^' + str + '$';
             return this;  
         },
-        execute: function() {
+        execute() {
             var regStr = this.regStr + this.modifiers;
-            console.info('regStr', regStr)
             this.regStr = '';
             return new RegExp(regStr, this.modifiers);
         },
-        findAndGroup: function(str) {
+        findAndGroup(str) {
             if(arguments.length > 1) {
                 this.regStr += '(';
                 for(let i = 0; i < arguments.length; i++) {
@@ -50,7 +47,7 @@
             }
             return this;
         },
-        findAndOutGroup: function(str) {
+        findAndOutGroup(str) {
             if(arguments.length > 1) {
                 this.regStr += '(?:';
                 for(let i = 0; i < arguments.length; i++) {
@@ -64,19 +61,19 @@
             }
             return this;
         },
-        find: function(str) {
+        find(str) {
             this.regStr += str;
             return this;
         },
-        groupMultipleValues: function() {
+        groupMultipleValues() {
             this.regStr += '(.*)';
             return this;
         },
-        outGroupMultipleValues: function() {
+        outGroupMultipleValues() {
             this.regStr += '(?:.*)';
             return this;
         },
-        allowSpace: function(start, end) {
+        allowSpace(start, end) {
             if(start && end) {
                 this.regStr += '\\s{' + start + ',' + end + '}';
             }else{
@@ -84,7 +81,7 @@
             }
             return this;
         },
-        findAnyOf: function(str) {
+        findAnyOf(str) {
             this.regStr += '(';
             for(let i = 0; i < arguments.length; i++) {
                 this.regStr += i === arguments.length - 1? arguments[i]: arguments[i] + '|';
@@ -92,13 +89,13 @@
             this.regStr += ')';
             return this;
         },
-        openFindAnyOf: function() {
+        openFindAnyOf() {
             this.regStr += '(';
         },
-        closeFindAnyOf: function() {
+        closeFindAnyOf() {
             this.regStr += ')';
         },
-        findAnyNotOf: function(str) {
+        findAnyNotOf(str) {
             this.regStr += '(^';
             for(let i = 0; i < arguments.length; i++) {
                 this.regStr += i === arguments.length - 1? arguments[i]: arguments[i] + '|';
@@ -106,7 +103,7 @@
             this.regStr += ')';
             return this;
         },
-        findAnyCharacterIn: function(str) {
+        findAnyCharacterIn(str) {
             this.regStr += '[';
             for(let i = 0; i < arguments.length; i++) {
                 this.regStr += i === arguments.length - 1? arguments[i]: arguments[i] + '|';
@@ -114,7 +111,7 @@
             this.regStr += ']';
             return this;
         },
-        findAnyCharacterNotIn: function(str) {
+        findAnyCharacterNotIn(str) {
             this.regStr += '[^';
             for(let i = 0; i < arguments.length; i++) {
                 this.regStr += i === arguments.length - 1? arguments[i]: arguments[i] + '|';
@@ -122,111 +119,111 @@
             this.regStr += ']';
             return this;
         },
-        openFindAnyCharacterIn: function() {
+        openFindAnyCharacterIn() {
             this.regStr += '[';
             return this;
         },
-        closeFindAnyCharacterIn: function() {
+        closeFindAnyCharacterIn() {
             this.regStr += ']';
             return this;
         },
-        openFindAnyCharacterNotIn: function() {
+        openFindAnyCharacterNotIn() {
             this.regStr += '[^';
             return this;
         },
-        closeFindAnyCharacterNotIn: function() {
+        closeFindAnyCharacterNotIn() {
             this.regStr += ']';
             return this;
         },
-        findDigit: function() {
+        findDigit() {
             this.regStr += '\\d';
             return this;
         },
-        digit: function() {
+        digit() {
             this.regStr += '\\d';
             return this;
         },
-        findNoneDigit: function() {
+        findNoneDigit() {
             this.regStr += '\\D';
             return this;
         },
-        noneDigit: function() {
+        noneDigit() {
             this.regStr += '\\D';
             return this;
         },
-        findWord: function() {
+        findWord() {
             this.regStr += '\\w';
             return this;
         },
-        findNoneWord: function() {
+        findNoneWord() {
             this.regStr += '\\W';
             return this;
         },
-        word: function() {
+        word() {
             this.regStr += '\\w';
             return this;
         },
-        noneWord: function() {
+        noneWord() {
             this.regStr += '\\W';
             return this;
         },
-        findSpace: function() {
+        findSpace() {
             this.regStr += '\\s';
             return this;
         },
-        findNoneSpace: function() {
+        findNoneSpace() {
             this.regStr += '\\S';
             return this;
         },
-        space: function() {
+        space() {
             this.regStr += '\\s';
             return this;
         },
-        noneSpace: function() {
+        noneSpace() {
             this.regStr += '\\S';
             return this;
         },
-        findAtBeginingOrEndOfWord: function() {
+        findAtBeginingOrEndOfWord() {
             this.regStr += '\\b';
             return this;
         },
-        findNotAtBeginingOrEndOfWord: function() {
+        findNotAtBeginingOrEndOfWord() {
             this.regStr += '\\B';
             return this;
         },
-        findFromFeed: function() {
+        findFromFeed() {
             this.regStr += '\\f';
             return this;
         },
-        findCarriageReturn: function() {
+        findCarriageReturn() {
             this.regStr += '\\r';
             return this;
         },
-        findTab: function() {
+        findTab() {
             this.regStr += '\\t';
             return this;
         },
-        findVerticalTab: function() {
+        findVerticalTab() {
             this.regStr += '\\v';
             return this;
         },
-        findAtNewLine: function() {
+        findAtNewLine() {
             this.regStr += '\\n';
             return this;
         },
-        matchOneOrMore: function() {
+        matchOneOrMore() {
             this.regStr += '+';
             return this;
         },
-        matchZeroOrMore: function() {
+        matchZeroOrMore() {
             this.regStr += '*';
             return this;
         },
-        matchZeroOrOne: function() {
+        matchZeroOrOne() {
             this.regStr += '?';
             return this;
         },
-        matchRange: function(r1, r2) {
+        matchRange(r1, r2) {
             if(r1 > -1) {
                 this.regStr += '{' + r1;
                 if(typeof r2 === 'number' && r2 !== -1) {
@@ -238,42 +235,39 @@
             }
             return this;
         },
-        matchWhenFollowedBy: function(str1, str2) {
+        matchWhenFollowedBy(str1, str2) {
             this.regStr += str1 + '(?=' + str2 + ')';
             return this;
         },
-        matchWhenNotFollowedBy: function(str1, str2) {
+        matchWhenNotFollowedBy(str1, str2) {
             this.regStr += str1 + '(?!' + str2 + ')';
             return this;
         },
-        global: function() {
+        global() {
             let modifier = 'g';
             this.modifiers +=  this.modifiers.indexOf(modifier) === -1 ? modifier: '';
             return this;
         },
-        insensitive: function() {
+        insensitive() {
             let modifier = 'i';
             this.modifiers +=  this.modifiers.indexOf(modifier) === -1 ? modifier: '';
             return this;
         },
-        multiline: function() {
+        multiline() {
             let modifier = 'm';
             this.modifiers +=  this.modifiers.indexOf(modifier) === -1 ? modifier: '';
             return this;
         },
-        resetRegex: function() {
+        resetRegex() {
             this.regStr = '';
         }
         
 
     }
 
-    var init = RegexThen.fn.init = function() {
-
-    }
+    var init = RegexThen.fn.init = function() {}
 
     init.prototype = RegexThen.fn;
-
     
     window.RegexThen = RegexThen();
 
